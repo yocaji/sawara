@@ -2,10 +2,12 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in chatgpt_cli-cli.gemspec
+# Specify your gem's dependencies in chatgpt_cli.gemspec
 # gemspec
 
+gem 'byebug'
 gem 'cli-ui'
+gem 'dotenv'
 gem 'rake'
 gem 'rspec'
 gem 'rubocop'
