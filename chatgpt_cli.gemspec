@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = 'Use ChatGPT in Terminal via OpenAI API.'
   spec.homepage = 'https://github.com/yocajii/chatgpt-cli'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 2.6.0'
+  spec.required_ruby_version = '>= 3.1.0'
 
   spec.metadata['allowed_push_host'] = 'TODO: Set to your gem server \'https://example.com\''
 
@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+  spec.metadata['rubygems_mfa_required'] = 'true'
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency 'example-gem', '~> 1.0'
