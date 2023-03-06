@@ -2,42 +2,65 @@
 
 require 'byebug'
 require 'cli/ui'
-require 'dotenv/load'
 require 'openai'
+require 'yaml'
+require 'yaml/store'
 
 class ChatgptCli
-  def initialize
-    OpenAI.configure do |config|
-      config.access_token = ENV.fetch('OPENAI_ACCESS_TOKEN')
-    end
-    @client = OpenAI::Client.new
-  end
+  CONFIG_PATH = "#{Dir.home}/.chatgpt-cli".freeze
 
   def self.start
     new.start
   end
 
   def start
+    if File.exist? CONFIG_PATH
+      load_config
+    else
+      File.new CONFIG_PATH
+      update_config
+    end
+
     puts 'Hint: Type "quit" to end this conversation.'
     messages = []
     loop do
-      question = CLI::UI.ask('Enter your message.', default: 'Hello!')
+      question = CLI::UI.ask('Enter your message.')
 
       break if question.downcase == 'quit'
 
       puts 'Waiting...'
-      talk(messages)
+      messages << { role: 'user', content: question }
+      talk messages
     end
   end
 
   private
 
+  def load_config
+    config = YAML.load_file(CONFIG_PATH)
+    @api_key = config['api_key']
+  end
+
+  def update_config
+    api_key = CLI::UI.ask('Enter your OpenAI API Key.')
+    store = YAML::Store.new CONFIG_PATH
+    store.transaction do
+      store['api_key'] = api_key
+    end
+  end
+
+  def client
+    OpenAI.configure do |config|
+      config.access_token = @api_key
+    end
+    OpenAI::Client.new
+  end
+
   def talk(messages)
-    messages << { role: 'user', content: question }
-    puts messages
-    response = @client.chat(
+    response = client.chat(
       parameters: { model: 'gpt-3.5-turbo', messages: }
     )
+    puts response
     answer = response.dig('choices', 0, 'message', 'content')
     puts answer
     messages << { role: 'assistant', content: answer }

@@ -7,7 +7,6 @@ source 'https://rubygems.org'
 
 gem 'byebug'
 gem 'cli-ui'
-gem 'dotenv'
 gem 'rake'
 gem 'rspec'
 gem 'rubocop'
