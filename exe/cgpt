@@ -3,4 +3,4 @@
 
 require 'chatgpt_cli'
 
-ChatgptCli.start
+ChatgptCli::Talk.new.start
