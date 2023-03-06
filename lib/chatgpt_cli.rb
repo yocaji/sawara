@@ -19,21 +19,23 @@ class ChatgptCli
 
   def start
     puts 'Hint: Type "quit" to end this conversation.'
+    messages = []
     loop do
       question = CLI::UI.ask('Enter your message.', default: 'Hello!')
-      break if question.downcase == 'exit'
+      break if question.downcase == 'quit'
 
       puts 'Waiting...'
+      messages << { role: 'user', content: question }
+      puts messages
       response = @client.chat(
         parameters: {
           model: 'gpt-3.5-turbo',
-          messages: [
-            { role: 'user', content: question }
-          ]
+          messages: messages
         }
       )
-      pp response
-      puts response.dig('choices', 0, 'message', 'content')
+      answer = response.dig('choices', 0, 'message', 'content')
+      puts answer
+      messages << { role: 'assistant', content: answer }
     end
   end
 
