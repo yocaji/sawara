@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'byebug'
-require 'cli/ui'
 require 'openai'
 require_relative 'client'
 require_relative 'config'
@@ -13,14 +12,23 @@ module ChatgptCli
       config = Config.new
       client = Client.new.launch(config)
 
-      puts 'Hint: Type "quit" to end this conversation.'
+      puts 'Hint: To send your message, press "Ctrl + d".'
+      puts 'Hint: To exit this conversation, press "Ctrl + d" without entering any input.'
       messages = []
       loop do
-        question = CLI::UI.ask('Enter your message.')
+        content = []
+        loop do
+          line = gets
+          break if line.nil?
 
-        break if question.downcase == 'quit'
+          content << line
+        end
 
-        puts 'Waiting...'
+        question = content.join
+        pp question
+
+        break if question.empty?
+
         messages << { role: 'user', content: question }
         request(client, messages)
       end
