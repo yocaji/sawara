@@ -1,48 +1,39 @@
 # frozen_string_literal: true
 
 require 'byebug'
-require 'openai'
-require_relative 'client'
-require_relative 'config'
 
 module ChatgptCli
 
   class Talk
-    def start
-      config = Config.new
-      client = Client.new.launch(config)
-
-      puts 'Hint: To send your message, press "Ctrl + d".'
-      puts 'Hint: To exit this conversation, press "Ctrl + d" without entering any input.'
-      messages = []
+    def initialize
+      @messages = []
+    end
+    def start(client)
+      puts 'Hint: To send your message, press "Enter" and "Ctrl + d".'
+      puts 'Hint: To exit this conversation, press "Ctrl + d" without any message.'
+      puts ''
       loop do
-        content = []
-        loop do
-          line = gets
-          break if line.nil?
+        user_content = await_user_content
+        break if user_content.empty?
 
-          content << line
-        end
-
-        question = content.join
-        pp question
-
-        break if question.empty?
-
-        messages << { role: 'user', content: question }
-        request(client, messages)
+        await_assistant_content(client)
       end
     end
 
     private
 
-    def request(client, messages)
-      response = client.chat(
-        parameters: { model: 'gpt-3.5-turbo', messages: }
-      )
-      answer = response.dig('choices', 0, 'message', 'content')
-      puts answer
-      messages << { role: 'assistant', content: answer }
+    def await_user_content
+      print 'You: '
+      content = $stdin.readlines.join
+      @messages << { role: 'user', content: }
+      content
+    end
+
+    def await_assistant_content(client)
+      print 'Vanilla: '
+      content = client.fetch(@messages)
+      @messages << { role: 'assistant', content: }
+      puts content
     end
   end
 end

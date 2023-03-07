@@ -6,7 +6,6 @@ source 'https://rubygems.org'
 # gemspec
 
 gem 'byebug'
-gem 'cli-ui'
 gem 'rake'
 gem 'rspec'
 gem 'rubocop'

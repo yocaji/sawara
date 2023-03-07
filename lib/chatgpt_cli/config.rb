@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'cli/ui'
 require 'yaml'
 require 'yaml/store'
 
@@ -27,7 +26,8 @@ module ChatgptCli
     end
 
     def update_config
-      api_key = CLI::UI.ask('Enter your OpenAI API Key.')
+      puts 'Enter your OpenAI API Key.'
+      api_key = $stdin.gets
       store = YAML::Store.new CONFIG_PATH
       store.transaction do
         store['api_key'] = api_key
