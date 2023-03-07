@@ -5,11 +5,16 @@ require 'thor'
 module Sawara
   class CLI < Thor
     desc 'hi', 'Start a conversation with a bot without any prompts'
-
     def hi
-      config = Sawara::Config.new
-      client = Sawara::ChatClient.new(config)
+      api_key = Sawara::UserConfig.new.api_key
+      client = Sawara::ChatClient.new(api_key)
       Sawara::Talk.new.start(client)
+    end
+
+    desc 'setkey', 'Register or update an API key for OpenAI API'
+    def setkey
+      config = Sawara::UserConfig.new
+      config.set_api_key
     end
 
     map %w[-v --version] => :version

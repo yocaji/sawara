@@ -4,8 +4,7 @@ require 'openai'
 
 module Sawara
   class ChatClient
-    def initialize(user_config)
-      api_key = user_config.api_key
+    def initialize(api_key)
       OpenAI.configure do |config|
         config.access_token = api_key
       end
