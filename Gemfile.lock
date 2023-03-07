@@ -45,6 +45,7 @@ GEM
     ruby-openai (3.5.0)
       httparty (>= 0.18.1)
     ruby-progressbar (1.13.0)
+    thor (1.2.1)
     unicode-display_width (2.4.2)
 
 PLATFORMS
@@ -56,6 +57,7 @@ DEPENDENCIES
   rspec
   rubocop
   ruby-openai
+  thor
 
 BUNDLED WITH
    2.4.7

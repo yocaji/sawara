@@ -13,7 +13,7 @@ RSpec.describe Sawara::Talk do
     end
 
     it 'prints gem name' do
-      expect { @talk.start(nil) }.to output(/S a w a r a/).to_stdout
+      expect { @talk.start(nil) }.to output(/S a w a r a 🐟/).to_stdout
     end
 
     it 'breaks out of the loop when user input is empty' do
