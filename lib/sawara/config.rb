@@ -8,7 +8,7 @@ module Sawara
     CONFIG_PATH = "#{Dir.home}/.sawara".freeze
 
     def initialize
-      unless File.exist? CONFIG_PATH
+      unless File.exist?(CONFIG_PATH)
         File.new(CONFIG_PATH, 'w')
         update_config
       end
@@ -28,7 +28,7 @@ module Sawara
     def update_config
       puts 'Enter your OpenAI API Key.'
       api_key = $stdin.gets
-      store = YAML::Store.new CONFIG_PATH
+      store = YAML::Store.new(CONFIG_PATH)
       store.transaction do
         store['api_key'] = api_key
       end

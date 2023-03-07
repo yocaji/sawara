@@ -27,7 +27,7 @@ module Sawara
         Hint 2: To exit this conversation, press "Ctrl + d" without any message.
       MSG
       puts
-      puts 'C h a t G P T  C L I'.center(80)
+      puts 'S a w a r a 🐟'.center(80)
       puts '*' * 80
       puts hints
       puts '*' * 80
@@ -36,7 +36,7 @@ module Sawara
     def await_user_content
       puts
       puts 'You:'
-      content = $stdin.readlines.join
+      content = $stdin.readlines.join.sub(/\n*$/, '')
       @messages << { role: 'user', content: }
       content
     end
@@ -44,7 +44,7 @@ module Sawara
     def await_assistant_content(client)
       puts
       puts 'Sawara:'
-      content = client.fetch(@messages).sub!(/^\R*/, '')
+      content = client.fetch(@messages).sub(/^\n*/, '')
       @messages << { role: 'assistant', content: }
       puts content
     end
