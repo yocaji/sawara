@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.email = ['yocajii@stone.sakura.ne.jp']
 
   spec.summary = 'This is ChatGPT CLI.'
-  spec.description = 'Use ChatGPT in Terminal via OpenAI API.'
+  spec.description = 'Sawara is a comannd-line tool for using ChatGPT via OpenAI API.'
+
   spec.homepage = 'https://github.com/yocajii/sawara'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.1.0'

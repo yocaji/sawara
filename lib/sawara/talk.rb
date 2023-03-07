@@ -35,7 +35,7 @@ module Sawara
 
     def await_user_content
       puts
-      print 'You: '
+      puts 'You:'
       content = $stdin.readlines.join
       @messages << { role: 'user', content: }
       content
@@ -43,8 +43,8 @@ module Sawara
 
     def await_assistant_content(client)
       puts
-      print 'Vanilla: '
-      content = client.fetch(@messages).sub!(/^\R/, '')
+      puts 'Sawara:'
+      content = client.fetch(@messages).sub!(/^\R*/, '')
       @messages << { role: 'assistant', content: }
       puts content
     end
