@@ -16,7 +16,7 @@ module Sawara
       response = @openai_client.chat(
         parameters: { model: 'gpt-3.5-turbo', messages: }
       )
-      response.dig('choices', 0, 'message', 'content')
+      response.dig('choices', 0, 'message', 'content').sub(/^\n*/, '')
     end
   end
 end

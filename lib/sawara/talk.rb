@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'byebug'
 
 module Sawara
   class Talk
@@ -36,7 +35,13 @@ module Sawara
     def await_user_content
       puts
       puts 'You:'
-      content = $stdin.readlines.join.sub(/\n*$/, '')
+
+      lines = []
+      while (line = Readline.readline)
+        lines << line
+      end
+
+      content = lines.join.sub(/\n*$/, '')
       @messages << { role: 'user', content: }
       content
     end
@@ -44,7 +49,8 @@ module Sawara
     def await_assistant_content(client)
       puts
       puts 'Sawara:'
-      content = client.fetch(@messages).sub(/^\n*/, '')
+
+      content = client.fetch(@messages)
       @messages << { role: 'assistant', content: }
       puts content
     end
