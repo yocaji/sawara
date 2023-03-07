@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'readline'
+
 RSpec.describe Sawara::Talk do
   before do
     @talk = Sawara::Talk.new
@@ -21,7 +23,7 @@ RSpec.describe Sawara::Talk do
 
   describe '#await_user_content' do
     it 'accepts user input and adds it to @messages' do
-      allow($stdin).to receive(:readlines).and_return(["hello\n"])
+      allow(Readline).to receive(:readline).and_return("hello\n", nil)
       @talk.send(:await_user_content)
 
       last_message = @talk.instance_variable_get(:@messages).last
