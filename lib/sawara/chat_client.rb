@@ -2,8 +2,7 @@
 
 require 'openai'
 
-module ChatgptCli
-
+module Sawara
   class ChatClient
     def initialize(user_config)
       api_key = user_config.api_key

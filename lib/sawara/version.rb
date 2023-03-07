@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-module ChatgptCli
+module Sawara
   VERSION = '0.1.0'
 end

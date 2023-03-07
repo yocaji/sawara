@@ -2,7 +2,7 @@
 
 require 'byebug'
 
-module ChatgptCli
+module Sawara
   class Talk
     def initialize
       @messages = []
@@ -32,6 +32,7 @@ module ChatgptCli
       puts hints
       puts '*' * 80
     end
+
     def await_user_content
       puts
       print 'You: '

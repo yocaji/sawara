@@ -1,21 +1,22 @@
-# ChatGPT Cli
+# Sawara
 
-Use ChatGPT on Terminal via OpenAI API.
+Sawara is a Ruby Gem for using ChatGPT in your terminal via OpenAI API.
 
 ## Installation
 
-    $ gem install chatgpt-cli
+    $ gem install sawara
 
 ## Initial setup
 
 1. Get your API key from [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
-2. `$ cgpt`
+2. `$ sawara`
 3. Enter your API Key.
 
 ## Usage
 
+Executing `sawara` initiates a conversation with ChatGPT.
 ```
-$ cgpt
+$ sawara
 ```
 
 ## Development
@@ -26,7 +27,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/yocajii/chatgpt-cli. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/yocajii/chatgpt-cli/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/yocajii/sawara. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/yocajii/sawara/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -34,4 +35,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the chatgpt-cli project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/chatgpt-cli/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the sawara project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/sawara/blob/main/CODE_OF_CONDUCT.md).

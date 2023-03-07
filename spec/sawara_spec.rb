@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe ChatgptCli do
+RSpec.describe Sawara do
   it 'has a version number' do
-    expect(ChatgptCli::VERSION).not_to be nil
+    expect(Sawara::VERSION).not_to be nil
   end
 
   it 'does something useful' do

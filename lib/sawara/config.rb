@@ -3,9 +3,9 @@
 require 'yaml'
 require 'yaml/store'
 
-module ChatgptCli
+module Sawara
   class Config
-    CONFIG_PATH = "#{Dir.home}/.chatgpt-cli".freeze
+    CONFIG_PATH = "#{Dir.home}/.sawara".freeze
 
     def initialize
       unless File.exist? CONFIG_PATH
