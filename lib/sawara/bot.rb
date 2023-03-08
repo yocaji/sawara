@@ -14,23 +14,27 @@ module Sawara
         puts 'No bots are registered🫥'
         puts 'To register a bot, use `sawara add [NAME]`.'
       else
-        @bots.each do |name, prompt|
-          puts "#{name}: #{prompt}"
+        @bots.each do |id, profile|
+          puts "#{profile[:name]}(#{id}):"
+          puts "  \"#{profile[:prompt]}\""
         end
       end
     end
 
-    def create(name)
-      return unless name_is_valid?(name)
+    def create(id)
+      return unless id_is_valid?(id)
+
+      name = await_name
+      return if name.nil?
 
       prompt = await_prompt
-      return if prompt.nil?
+      return if prompt.empty?
 
-      @bots[name] = prompt
+      @bots[id] = { name:, prompt: }
       UserConfig.new.save('bots', @bots)
       puts
-      puts "#{name}'s default prompt registration was successful🎉"
-      puts "To begin a conversation with #{name}, use `sawara -b #{name}`."
+      puts "#{id}'s default prompt registration was successful🎉"
+      puts "To begin a conversation with #{id}, use `sawara -b #{id}`."
     end
 
     def find(name)
@@ -62,14 +66,24 @@ module Sawara
 
     private
 
-    def await_prompt
+    def await_name
       puts
-      puts 'Please enter the prompt of your bot📜'
+      puts 'Please enter the name of your bot😉'
       line = Readline.readline
       return if line.nil?
 
-      prompt = line.chomp
-      prompt.empty? ? await_prompt : prompt
+      name = line.chomp
+      name.empty? ? await_name : name
+    end
+
+    def await_prompt
+      puts
+      puts 'Please enter the prompt of your bot📜'
+      lines = []
+      while (line = Readline.readline)
+        lines << ("#{line}\n")
+      end
+      lines.join.gsub(/^\n+|\n+$/, '')
     end
 
     def await_confirm
@@ -80,20 +94,20 @@ module Sawara
       confirm == 'y'
     end
 
-    def name_is_valid?(name)
-      if name.empty?
-        puts 'Bot name must have at least one character.'
+    def id_is_valid?(id)
+      if id.empty?
+        puts 'Bot id must have at least one character.'
         false
-      elsif exists?(name)
-        puts "\"#{name}\" is already registered."
+      elsif exists?(id)
+        puts "\"#{id}\" is already registered id."
         false
       else
         true
       end
     end
 
-    def exists?(name)
-      !!@bots[name]
+    def exists?(id)
+      !!@bots[id]
     end
   end
 end

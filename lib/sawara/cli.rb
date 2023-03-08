@@ -10,11 +10,11 @@ module Sawara
       Sawara::Talk.new.start(client)
     end
 
-    desc 'bot [NAME], -b [NAME]', 'Starts a conversation with the bot named [NAME].'
+    desc 'bot [ID], -b [ID]', 'Starts a conversation with the bot named [ID].'
     map '-b' => :bot
-    def bot(name)
+    def bot(id)
       client = launch_client
-      prompt = Bot.new.find(name)
+      prompt = Bot.new.find(id)
       talk = Sawara::Talk.new(prompt)
       talk.start(client)
     end
@@ -24,14 +24,14 @@ module Sawara
       Sawara::ApiKey.new.set_api_key
     end
 
-    desc 'add [NAME]', 'Register a new bot with name and prompt.'
-    def add(name)
-      Sawara::Bot.new.create(name)
+    desc 'add [ID]', 'Register a new bot with name and prompt.'
+    def add(id)
+      Sawara::Bot.new.create(id)
     end
 
-    desc 'delete [NAME]', 'Deletes the bot named [NAME].'
-    def delete(name)
-      Sawara::Bot.new.delete(name)
+    desc 'delete [ID]', 'Deletes the bot named [ID].'
+    def delete(id)
+      Sawara::Bot.new.delete(id)
     end
 
     desc 'list, -l', 'List all bots with their names and prompts.'

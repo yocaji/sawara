@@ -45,10 +45,10 @@ module Sawara
 
       lines = []
       while (line = Readline.readline)
-        lines << line
+        lines << ("#{line}\n")
       end
 
-      content = lines.join.sub(/\n*$/, '')
+      content = lines.join
       @messages << { role: 'user', content: }
       content
     end
