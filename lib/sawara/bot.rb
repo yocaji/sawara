@@ -43,7 +43,7 @@ module Sawara
         puts
         puts "Loaded the bot \"#{profile['name']}\". The prompt is as follows:"
         puts profile['prompt']
-        profile['prompt']
+        profile
       else
         puts "The bot has id \"#{id}\" does not exist in the registered bots."
       end
