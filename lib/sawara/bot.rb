@@ -5,7 +5,7 @@ require 'readline'
 module Sawara
   class Bot
     def initialize
-      @bots = UserConfig.new.read['bots']
+      @bots = UserConfig.read['bots']
     end
 
     def list
@@ -15,8 +15,8 @@ module Sawara
         puts 'To register a bot, use `sawara add [NAME]`.'
       else
         @bots.each do |id, profile|
-          puts "#{profile[:name]}(#{id}):"
-          puts "  \"#{profile[:prompt]}\""
+          puts "#{profile['name']}(#{id}):"
+          puts "  \"#{profile['prompt']}\""
         end
       end
     end
@@ -30,37 +30,36 @@ module Sawara
       prompt = await_prompt
       return if prompt.empty?
 
-      @bots[id] = { name:, prompt: }
-      UserConfig.new.save('bots', @bots)
+      @bots[id] = { 'name' => name, 'prompt' => prompt }
+      UserConfig.save('bots', @bots)
       puts
       puts "#{id}'s default prompt registration was successful🎉"
       puts "To begin a conversation with #{id}, use `sawara -b #{id}`."
     end
 
-    def find(name)
-      if @bots[name].nil?
+    def find(id)
+      if exists?(id)
+        profile = @bots[id]
         puts
-        puts "\"#{name}\" was not found."
+        puts "Loaded the bot \"#{profile['name']}\". The prompt is as follows:"
+        puts profile['prompt']
+        profile['prompt']
       else
-        prompt = @bots[name]
-        puts
-        puts "Loaded the bot \"#{name}\". The prompt is as follows:"
-        puts prompt
-        { name:, prompt: }
+        puts "The bot has id \"#{id}\" does not exist in the registered bots."
       end
     end
 
-    def delete(name)
-      if exists?(name)
-        puts "⚠️Are you sure you want to delete #{name}? (y/n)"
+    def delete(id)
+      if exists?(id)
+        puts "⚠️Are you sure you want to delete #{id}? (y/n)"
         return unless await_confirm
 
-        @bots.delete(name)
-        UserConfig.new.save('bots', @bots)
+        @bots.delete(id)
+        UserConfig.save('bots', @bots)
         puts
-        puts "\"#{name}\" has been deleted."
+        puts "\"#{id}\" has been deleted."
       else
-        puts "\"#{name}\" does not exist in the registered bots."
+        puts "The bot has id \"#{id}\" does not exist in the registered bots."
       end
     end
 
@@ -107,7 +106,7 @@ module Sawara
     end
 
     def exists?(id)
-      !!@bots[id]
+      @bots.key?(id)
     end
   end
 end

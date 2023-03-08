@@ -13,8 +13,10 @@ module Sawara
     desc 'bot [ID], -b [ID]', 'Starts a conversation with the bot named [ID].'
     map '-b' => :bot
     def bot(id)
-      client = launch_client
       prompt = Bot.new.find(id)
+      return if prompt.nil?
+
+      client = launch_client
       talk = Talk.new(prompt)
       talk.start(client)
     end

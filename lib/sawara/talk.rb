@@ -9,8 +9,8 @@ module Sawara
       if bot.nil?
         @name = 'Sawara'
       else
-        @name = bot[:name]
-        @messages << { role: 'system', content: bot[:prompt] }
+        @name = bot['name']
+        @messages << { role: 'system', content: bot['prompt'] }
       end
     end
 
