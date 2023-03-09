@@ -2,18 +2,16 @@
 
 RSpec.describe Sawara::ChatClient do
   describe '#fetch' do
-    before do
-      openai_client = instance_double('OpenAI::Client')
-      allow(OpenAI::Client).to receive(:new).and_return(openai_client)
-      response = { 'choices' => [{ 'message' => { 'content' => 'test response' } }] }
-      allow(openai_client).to receive(:chat).and_return(response)
-    end
+    context 'with valid parameters' do
+      let(:parameters) { { model: 'gpt-3.5-turbo', messages: ['Hello'] } }
+      let(:response) { { 'choices' => [{ 'message' => { 'content' => 'Hi there!' } }] } }
+      let(:client) { Sawara::ChatClient.new('test_api_key') }
 
-    it 'returns the content from OpenAI API' do
-      user_config = double('user_config', api_key: 'my-api-key')
-      chat_client = Sawara::ChatClient.new(user_config)
-      messages = ['hello']
-      expect(chat_client.fetch(messages)).to eq('test response')
+      it 'returns the expected response' do
+        allow(client.instance_variable_get(:@openai_client)).to receive(:chat).with(parameters:).and_return(response)
+
+        expect(client.fetch(['Hello'])).to eq('Hi there!')
+      end
     end
   end
 end

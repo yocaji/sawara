@@ -34,7 +34,7 @@ module Sawara
       UserConfig.save('bots', @bots)
       puts
       puts "#{id}'s default prompt registration was successful🎉"
-      puts "To begin a conversation with #{id}, use `sawara -b #{id}`."
+      puts "To begin a conversation with #{id}, use `sawara -c #{id}`."
     end
 
     def find(id)

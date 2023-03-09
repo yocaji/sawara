@@ -4,7 +4,8 @@ require 'thor'
 
 module Sawara
   class CLI < Thor
-    desc 'call [ID], -c [ID]', 'Start a conversation (If [ID] is there, preload the prompt of the bot specified by [ID])'
+    desc 'call [ID], -c [ID]',
+         'Start a conversation (If [ID] is there, preload the prompt of the bot specified by [ID])'
     map '-c' => :call
     def call(id = nil)
       client = launch_client
