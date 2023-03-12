@@ -4,8 +4,14 @@ require 'readline'
 
 module Sawara
   class Talk
-    def initialize
+    def initialize(bot = nil)
       @messages = []
+      if bot.nil?
+        @name = 'Sawara'
+      else
+        @name = bot[:name]
+        @messages << { role: 'system', content: bot[:prompt] }
+      end
     end
 
     def start(client)
@@ -39,17 +45,17 @@ module Sawara
 
       lines = []
       while (line = Readline.readline)
-        lines << line
+        lines << ("#{line}\n")
       end
 
-      content = lines.join.sub(/\n*$/, '')
+      content = lines.join
       @messages << { role: 'user', content: }
       content
     end
 
     def await_assistant_content(client)
       puts
-      puts 'Sawara:'
+      puts "#{@name}:"
 
       content = client.fetch(@messages)
       @messages << { role: 'assistant', content: }

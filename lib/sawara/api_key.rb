@@ -16,7 +16,7 @@ module Sawara
     private
 
     def await_api_key
-      puts '🔑Enter your OpenAI API Key.'
+      puts 'Please enter your OpenAI API Key🔑'
       $stdin.gets.chomp
     end
   end

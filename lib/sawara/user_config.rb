@@ -12,6 +12,7 @@ module Sawara
 
       File.new(CONFIG_PATH, 'w')
       save('api_key', '')
+      save('bots', {})
     end
 
     def read
