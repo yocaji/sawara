@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'readline'
+
 module Sawara
   class Talk
     def initialize

@@ -9,7 +9,7 @@ Sawara is a Ruby Gem for using ChatGPT in your terminal via OpenAI API.
 ## Initial setup
 
 1. Get your API key from [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
-2. `$ sawara`
+2. `$ sawara hi` or `$ sawara setkey`
 3. Enter your API Key.
 
 ## Usage

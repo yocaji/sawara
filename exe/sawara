@@ -3,6 +3,4 @@
 
 require 'sawara'
 
-config = Sawara::Config.new
-client = Sawara::ChatClient.new(config)
-Sawara::Talk.new.start(client)
+Sawara::CLI.start
