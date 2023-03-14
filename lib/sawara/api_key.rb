@@ -1,22 +1,16 @@
 # frozen_string_literal: true
 
-require_relative 'user_config'
-
 module Sawara
   class ApiKey
-    def initialize
-      @user_config = UserConfig.new
-    end
-
     def read
-      @user_config.read['api_key']
+      UserConfig.read['api_key']
     end
 
     def update
       api_key = await_api_key
       return if api_key.nil?
 
-      @user_config.save('api_key', api_key)
+      UserConfig.save('api_key', api_key)
     end
 
     private

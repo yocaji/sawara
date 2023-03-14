@@ -4,43 +4,44 @@ require 'thor'
 
 module Sawara
   class CLI < Thor
-    desc 'hi', 'Start a conversation with a bot without any prompts.'
-    def hi
+    desc 'call [ID], -c [ID]',
+         'Start a conversation (If [ID] is there, preload the prompt of the bot specified by [ID])'
+    map '-c' => :call
+    def call(id = nil)
       client = launch_client
-      Talk.new.start(client)
+      if id.nil?
+        Talk.new.start(client)
+      else
+        profile = Bot.new.find(id)
+        return if profile.nil?
+
+        talk = Talk.new(profile)
+        talk.start(client)
+      end
     end
 
-    desc 'bot [ID], -b [ID]', 'Starts a conversation with the bot named [ID].'
-    map '-b' => :bot
-    def bot(id)
-      client = launch_client
-      prompt = Bot.new.find(id)
-      talk = Talk.new(prompt)
-      talk.start(client)
-    end
-
-    desc 'setkey', 'Register or update an API key for OpenAI API.'
+    desc 'setkey', 'Register or update an API key for OpenAI API'
     def setkey
       ApiKey.new.update
     end
 
-    desc 'add [ID]', 'Register a new bot with name and prompt.'
+    desc 'add [ID]', 'Register a new bot with name and prompt'
     def add(id)
       Bot.new.create(id)
     end
 
-    desc 'delete [ID]', 'Deletes the bot named [ID].'
+    desc 'delete [ID]', 'Delete the bot specified by [ID]'
     def delete(id)
       Bot.new.delete(id)
     end
 
-    desc 'list, -l', 'List all bots with their names and prompts.'
+    desc 'list, -l', 'List all bots with their names and prompts'
     map '-l' => :list
     def list
       Bot.new.list
     end
 
-    desc 'version, -v', 'Print version.'
+    desc 'version, -v', 'Print version'
     map %w[-v --version] => :version
     def version
       puts VERSION

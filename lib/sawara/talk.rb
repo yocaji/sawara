@@ -4,13 +4,13 @@ require 'readline'
 
 module Sawara
   class Talk
-    def initialize(bot = nil)
+    def initialize(profile = nil)
       @messages = []
-      if bot.nil?
+      if profile.nil?
         @name = 'Sawara'
       else
-        @name = bot[:name]
-        @messages << { role: 'system', content: bot[:prompt] }
+        @name = profile['name']
+        @messages << { role: 'system', content: profile['prompt'] }
       end
     end
 

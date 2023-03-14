@@ -3,44 +3,35 @@
 require 'readline'
 
 RSpec.describe Sawara::Talk do
-  before do
-    @talk = Sawara::Talk.new
-  end
-
   describe '#start' do
-    before do
-      allow(@talk).to receive(:await_user_content).and_return('')
+    let(:talk) { Sawara::Talk.new }
+    let(:client) { double('chat_client') }
+
+    context 'when user input is empty' do
+      before do
+        allow(Readline).to receive(:readline).and_return(nil)
+        allow(talk).to receive(:await_assistant_content)
+      end
+
+      it 'prints gem name' do
+        expect { talk.start(client) }.to output(/S a w a r a 🐟/).to_stdout
+      end
+
+      it 'exits the loop' do
+        talk.start(client)
+        expect(talk).not_to have_received(:await_assistant_content)
+      end
     end
 
-    it 'prints gem name' do
-      expect { @talk.start(nil) }.to output(/S a w a r a 🐟/).to_stdout
-    end
+    context 'when user inputs a message' do
+      before do
+        allow(Readline).to receive(:readline).and_return('Hello', 'World', nil)
+      end
 
-    it 'breaks out of the loop when user input is empty' do
-      expect { @talk.start(nil) }.to output.to_stdout
-    end
-  end
-
-  describe '#await_user_content' do
-    it 'accepts user input and adds it to @messages' do
-      allow(Readline).to receive(:readline).and_return("hello\n", nil)
-      @talk.send(:await_user_content)
-
-      last_message = @talk.instance_variable_get(:@messages).last
-      expect(last_message).to eq({ role: 'user', content: 'hello' })
-    end
-  end
-
-  describe '#await_assistant_content' do
-    before do
-      @client = double('chat_client')
-      allow(@client).to receive(:fetch).and_return('response')
-    end
-
-    it 'receives response from client, adds it to @messages, and prints it' do
-      expect { @talk.send(:await_assistant_content, @client) }.to output(/response/).to_stdout
-      last_message = @talk.instance_variable_get(:@messages).last
-      expect(last_message).to eq({ role: 'assistant', content: 'response' })
+      it 'gets a response from the Assistant' do
+        expect(client).to receive(:fetch).with([{ role: 'user', content: "Hello\nWorld\n" }]).and_return('Hi there!')
+        expect { talk.start(client) }.to output(/Hi there!/).to_stdout
+      end
     end
   end
 end
