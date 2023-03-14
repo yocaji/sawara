@@ -1,6 +1,14 @@
 # Sawara
 
-Sawara is a Ruby Gem for using ChatGPT in your terminal via OpenAI API.
+![image](https://user-images.githubusercontent.com/33394676/224897066-0429c135-c1b0-49e4-8027-b96ebea93c6d.png)
+
+## Overview
+
+Sawara is a Ruby Gem and command-line interface (CLI) tool that enables you to use ChatGPT in your terminal via OpenAI API.
+
+With Sawara, you can easily create and manage multiple bots with different prompts, and have natural language conversations with them through the CLI.
+
+Of course, you can also start a conversation with a bot without setting a prompt in advance.
 
 ## Installation
 
@@ -9,15 +17,53 @@ Sawara is a Ruby Gem for using ChatGPT in your terminal via OpenAI API.
 ## Initial setup
 
 1. Get your API key from [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
-2. `$ sawara hi` or `$ sawara setkey`
+2. `$ sawara call` or `$ sawara setkey`
 3. Enter your API Key.
 
 ## Usage
 
-Executing `sawara` initiates a conversation with ChatGPT.
-```
-$ sawara
-```
+### Call a bot
+
+    $ sawara call
+    $ sawara -c
+
+Use the `sawara call` command to start a conversation.
+
+### Call a registered bot
+
+    $ sawara call <bot_id>
+    $ sawara -c <bot_id>
+
+Use the `sawara call` command followed by the ID of the bot to start a conversation with the registered bot.
+
+### Add a bot
+
+    $ sawara add <bot_id>
+
+Use the `sawara add` command followed by the ID of the bot you want to register. You'll be asked to provide a name and a prompt for the bot.
+
+### Delete a bot
+
+    $ sawara delete <bot_id>
+
+Use the `sawara delete` command followed by the ID of the bot you want to remove.
+
+### List all bots
+
+    $ sawara list
+    $ sawara -l
+
+Use the `sawara list` command to list all the bots you've registered.
+
+### Set or update your OpenAI API key
+
+    $ sawara setkey
+
+Use the `sawara setkey` command to set or update your OpenAI API key.
+
+### Configuration file
+
+Configuration data will be saved in `~/.sawara.yml`.
 
 ## Development
 
